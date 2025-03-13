@@ -14,7 +14,7 @@ class RegisterScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/plant_background.png',
+              'assets/background.jpeg', // Imagen de fondo corregida
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height * 0.3,
             ),
@@ -25,24 +25,36 @@ class RegisterScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo
-                Image.asset('assets/plantcare_logo.png', width: 200),
+                Image.asset(
+                  'assets/logo2.jpeg', // Imagen del logo corregida
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
                 SizedBox(height: 20),
 
-                // Campos de entrada
-                _buildTextField("Nombre de usuario"),
-                SizedBox(height: 10),
-                _buildTextField("Correo electrónico"),
-                SizedBox(height: 10),
-                _buildTextField("Contraseña", obscureText: true),
-                SizedBox(height: 10),
-                _buildTextField("Confirmar contraseña", obscureText: true),
-                SizedBox(height: 20),
+                _buildCenteredText("Nombre de usuario"),
+                SizedBox(height: 5),
+                _buildTextField(),
 
-                // Botón de Registro
+                SizedBox(height: 10),
+                _buildCenteredText("Correo electrónico"),
+                SizedBox(height: 5),
+                _buildTextField(),
+
+                SizedBox(height: 10),
+                _buildCenteredText("Contraseña"),
+                SizedBox(height: 5),
+                _buildTextField(obscureText: true),
+
+                SizedBox(height: 10),
+                _buildCenteredText("Confirmar contraseña"),
+                SizedBox(height: 5),
+                _buildTextField(obscureText: true),
+
+                SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
-                    // Navegar a la pantalla de Registro Exitoso
-                    Navigator.pushReplacement(
+                    Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => RegisterSuccessScreen()),
                     );
@@ -71,8 +83,6 @@ class RegisterScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-
-                // Texto de "¿Ya tienes cuenta? Ingresar"
                 TextButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/login');
@@ -98,12 +108,11 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  // Método para construir los TextFields con diseño uniforme
-  Widget _buildTextField(String hintText, {bool obscureText = false}) {
+  Widget _buildTextField({bool obscureText = false}) {
     return TextField(
       obscureText: obscureText,
+      textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: hintText,
         filled: true,
         fillColor: Colors.green[200],
         border: OutlineInputBorder(
@@ -113,9 +122,19 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildCenteredText(String text) {
+    return Align(
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 }
 
-// Pantalla de Registro Exitoso
 class RegisterSuccessScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -123,13 +142,12 @@ class RegisterSuccessScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Imagen de fondo en la parte inferior
           Positioned(
             bottom: 0,
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/plant_background.png',
+              'assets/background.jpeg', // Imagen de fondo corregida
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height * 0.3,
             ),
@@ -138,7 +156,7 @@ class RegisterSuccessScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset('assets/plantcare_logo.png', width: 200),
+                Image.asset('assets/logo2.jpeg', width: 200), // Imagen del logo corregida
                 SizedBox(height: 20),
                 Text(
                   "REGISTRO EXITOSO!!",
@@ -148,8 +166,6 @@ class RegisterSuccessScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-
-                // Botón para ir a la pantalla de Login
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/login');

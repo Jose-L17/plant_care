@@ -28,15 +28,16 @@ class _SplashScreenState extends State<SplashScreen> {
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/plant_background.png', // Imagen de las hojas
+              'assets/background.jpeg', // Imagen corregida
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height * 0.3,
             ),
           ),
-          // Logo centrado
-          Center(
+          // Logo centrado en la parte superior
+          Align(
+            alignment: Alignment.center,
             child: Image.asset(
-              'assets/plantcare_logo.png', // Asegúrate de que esta imagen incluye el logo y el texto
+              'assets/logo2.jpeg', // Imagen corregida
               width: 200,
             ),
           ),

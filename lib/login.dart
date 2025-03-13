@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:plant_care/signin.dart';
+import 'package:plant_care/home.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -15,7 +15,7 @@ class LoginScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Image.asset(
-              'assets/plant_background.png', // Imagen de fondo
+              'assets/background.jpeg', // Imagen de fondo corregida
               fit: BoxFit.cover,
               height: MediaQuery.of(context).size.height * 0.3,
             ),
@@ -26,29 +26,35 @@ class LoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // Logo
-                Image.asset('assets/plantcare_logo.png', width: 200),
+                Image.asset(
+                  'assets/logo2.jpeg', // Imagen del logo corregida
+                  width: 200,
+                  fit: BoxFit.cover,
+                ),
                 SizedBox(height: 20),
 
-                // Correo electrónico
-                _buildTextField("Correo electrónico"),
-                SizedBox(height: 10),
+                // Texto "Usuario" (Centrado)
+                _buildCenteredText("Usuario"),
+                SizedBox(height: 5),
+                _buildTextField(),
 
-                // Contraseña
-                _buildTextField("Contraseña", obscureText: true),
+                SizedBox(height: 15),
+
+                // Texto "Contraseña" (Centrado)
+                _buildCenteredText("Contraseña"),
+                SizedBox(height: 5),
+                _buildTextField(obscureText: true),
+
                 SizedBox(height: 20),
 
-                // Botón de Ingresar
+                // Botón de Login
                 ElevatedButton(
                   onPressed: () {
-                    // Simular autenticación y mostrar mensaje antes de ir a la pantalla de éxito
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text("Iniciando sesión..."), duration: Duration(seconds: 2)),
+                    // Navegar a la pantalla principal después de iniciar sesión
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomeScreen()),
                     );
-
-                    // Después de 2 segundos, navegar a la pantalla de "Registro Exitoso"
-                    Future.delayed(Duration(seconds: 2), () {
-                      Navigator.pushReplacementNamed(context, '/register_success');
-                    });
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[700],
@@ -58,7 +64,7 @@ class LoginScreen extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 50, vertical: 15),
                   ),
                   child: Text(
-                    'INGRESAR',
+                    'LOG IN',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -73,19 +79,17 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 SizedBox(height: 10),
 
                 // Texto de "¿No tienes cuenta? Regístrate"
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => RegisterScreen()),
-                    );
+                    Navigator.pushNamed(context, '/register');
                   },
                   child: Text.rich(
                     TextSpan(
-                      text: '¿No tienes cuenta? ',
+                      text: '¿No tienes una cuenta? ',
                       style: TextStyle(color: Colors.black54, fontWeight: FontWeight.bold),
                       children: [
                         TextSpan(
@@ -104,18 +108,30 @@ class LoginScreen extends StatelessWidget {
     );
   }
 
-  // Método para construir los TextFields con diseño uniforme
-  Widget _buildTextField(String hintText, {bool obscureText = false}) {
+  // Método para construir los TextFields
+  Widget _buildTextField({bool obscureText = false}) {
     return TextField(
       obscureText: obscureText,
+      textAlign: TextAlign.center,
       decoration: InputDecoration(
-        hintText: hintText,
         filled: true,
         fillColor: Colors.green[200],
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30),
           borderSide: BorderSide.none,
         ),
+      ),
+    );
+  }
+
+  // Método para construir los textos centrados
+  Widget _buildCenteredText(String text) {
+    return Align(
+      alignment: Alignment.center,
+      child: Text(
+        text,
+        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        textAlign: TextAlign.center,
       ),
     );
   }
