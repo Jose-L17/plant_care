@@ -4,7 +4,7 @@ import 'package:plant_care/features/auth/screens/login_screen.dart';
 import 'package:plant_care/features/auth/screens/register_screen.dart';
 import 'package:plant_care/features/auth/screens/registration_success_screen.dart';
 import 'package:plant_care/features/splash/screens/splash_screen.dart';
-import 'package:plant_care/features/auth/home/screens/main_navigation_screen.dart';
+import 'package:plant_care/features/main_navigation/screens/main_navigation_screen.dart';
 
 class AppRoutes {
   static const String splash = '/';
