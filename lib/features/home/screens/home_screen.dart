@@ -14,25 +14,41 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
+    return Stack(
+      children: [
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.transparent],
+              ),
+            ),
+            child: Image.asset(
+              'lib/assets/images/background.png',
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
               children: [
                 const _Header(),
                 _PlantGrid(plants: plants),
                 const SizedBox(height: 100),
               ],
             ),
-            const Align(
-              alignment: Alignment.bottomCenter,
-              child: _BottomDecoration(),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -43,14 +59,13 @@ class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200, // altura total del header
+      height: 200,
       child: Stack(
         children: [
-          // Logo centrado y separado del Positioned
           Align(
             alignment: Alignment.topCenter,
             child: SizedBox(
-              height: 120, // altura visible del logo
+              height: 120,
               child: Image.asset(
                 'lib/assets/images/namerapp.png',
                 width: 400,
@@ -58,16 +73,14 @@ class _Header extends StatelessWidget {
               ),
             ),
           ),
-
-          // Íconos posicionados de forma absoluta
           Positioned(
-            top: 135, // esta vez sí bajamos los íconos de verdad
+            top: 135,
             right: 20,
             child: Row(
               children: [
                 GestureDetector(
                   onTap: () {
-                    // Acción de cámara
+
                   },
                   child: const Icon(
                     Icons.camera_alt_outlined,
@@ -78,7 +91,7 @@ class _Header extends StatelessWidget {
                 const SizedBox(width: 16),
                 GestureDetector(
                   onTap: () {
-                    // Acción de agregar
+                    Navigator.pushNamed(context, '/add-plant');
                   },
                   child: const Icon(
                     Icons.add,
@@ -104,7 +117,7 @@ class _PlantGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: GridView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
         itemCount: plants.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -114,51 +127,37 @@ class _PlantGrid extends StatelessWidget {
         ),
         itemBuilder: (context, index) {
           final plant = plants[index];
-          return Container(
-            decoration: BoxDecoration(
-              color: AppColors.green100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
+          return Column(
+            children: [
+              Container(
+                height: 120,
+                decoration: BoxDecoration(
+                  color: AppColors.green100,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                alignment: Alignment.center,
+                child: Image.asset(
                   plant['image']!,
-                  height: 80,
-                  width: 80,
+                  height: 90,
+                  width: 90,
                   fit: BoxFit.contain,
                   errorBuilder: (context, error, stackTrace) =>
                       const Icon(Icons.broken_image, size: 50, color: Colors.grey),
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  plant['name']!,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 16,
-                    color: Colors.black,
-                  ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                plant['name']!,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 16,
+                  color: Colors.black,
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),
-    );
-  }
-}
-
-class _BottomDecoration extends StatelessWidget {
-  const _BottomDecoration({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Image.asset(
-      'lib/assets/images/background.png',
-      fit: BoxFit.cover,
-      height: 100,
-      width: double.infinity,
-      semanticLabel: 'Decoración inferior',
     );
   }
 }

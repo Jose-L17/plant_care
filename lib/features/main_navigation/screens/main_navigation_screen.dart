@@ -6,14 +6,16 @@ import '../../home/screens/notifications_screen.dart';
 import '../../home/screens/account_screen.dart';
 
 class MainNavigationScreen extends StatefulWidget {
-  const MainNavigationScreen({super.key});
+  final int initialIndex;
+
+  const MainNavigationScreen({super.key, this.initialIndex = 0});
 
   @override
   State<MainNavigationScreen> createState() => _MainNavigationScreenState();
 }
 
 class _MainNavigationScreenState extends State<MainNavigationScreen> {
-  int _currentIndex = 0;
+  late int _currentIndex;
 
   final List<Widget> _screens = const [
     HomeScreen(),
@@ -22,15 +24,23 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _currentIndex = widget.initialIndex;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      backgroundColor: Colors.white,
       body: Stack(
         children: [
+          // Ya no hay imagen de fondo aquí
+
+          // Pantalla activa
           _screens[_currentIndex],
 
-          // Barra de navegación flotante con sombra visible
+          // Barra de navegación rectangular translúcida
           Positioned(
             left: 0,
             right: 0,
@@ -38,25 +48,14 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
             child: SafeArea(
               top: false,
               child: Container(
-                margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.001), // activa el renderizado de sombra
-                  borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.25), // sombra notoria
-                      blurRadius: 20,
-                      spreadRadius: 2,
-                      offset: const Offset(0, -4), // sombra hacia arriba
-                    ),
-                  ],
-                ),
+                height: 70,
+                color: Colors.black.withOpacity(0.25),
+                padding: const EdgeInsets.symmetric(horizontal: 40),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     _buildIcon(Icons.home_outlined, 0),
-                    _buildIcon(Icons.notifications_outlined, 1),
+                    _buildIcon(Icons.notifications_none_outlined, 1),
                     _buildIcon(Icons.person_outline, 2),
                   ],
                 ),
@@ -69,6 +68,7 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
   }
 
   Widget _buildIcon(IconData iconData, int index) {
+    final isSelected = _currentIndex == index;
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -77,8 +77,8 @@ class _MainNavigationScreenState extends State<MainNavigationScreen> {
       },
       child: Icon(
         iconData,
-        size: 26,
-        color: AppColors.green900,
+        size: 28,
+        color: isSelected ? AppColors.green900 : Colors.black,
       ),
     );
   }

@@ -7,73 +7,99 @@ class NotificationsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Column(
-          children: [
-            const SizedBox(height: 20),
-
-            // Logo
-            Image.asset(
-              'lib/assets/images/namerapp.png',
-              width: 160,
-              fit: BoxFit.contain,
-              semanticLabel: 'Logo PlantCare',
+    return Stack(
+      children: [
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.transparent],
+              ),
             ),
+            child: Image.asset(
+              'lib/assets/images/background.png',
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
 
-            const SizedBox(height: 15),
-
-            // Título con icono
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
               children: [
-                Icon(Icons.notifications_outlined, size: 26, color: AppColors.green900),
-                SizedBox(width: 8),
-                Text(
-                  'Notificaciones',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w900,
-                    color: AppColors.green900,
+                // Encabezado fijo
+                SizedBox(
+                  height: 200,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: SizedBox(
+                      height: 120,
+                      child: Image.asset(
+                        'lib/assets/images/namerapp.png',
+                        width: 400,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
                   ),
                 ),
+
+                // Título visualmente más arriba
+                Transform.translate(
+                  offset: const Offset(0, -20),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.notifications_outlined, size: 26, color: AppColors.green900),
+                      SizedBox(width: 8),
+                      Text(
+                        'Notificaciones',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w900,
+                          color: AppColors.green900,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                Transform.translate(
+                  offset: const Offset(0, -10),
+                  child: const Column(
+                    children: [
+                      _NotificationItem(
+                        icon: Icons.notifications_active_outlined,
+                        text: 'Alarma de planta 1',
+                      ),
+                      SizedBox(height: 10),
+                      _NotificationItem(
+                        icon: Icons.warning_amber_outlined,
+                        text: 'Actualización',
+                      ),
+                      SizedBox(height: 10),
+                      _NotificationItem(
+                        icon: Icons.emoji_emotions_outlined,
+                        text: 'Valore nuestra app',
+                      ),
+                    ],
+                  ),
+                ),
+
+                const Spacer(),
               ],
             ),
-
-            const SizedBox(height: 30),
-
-            // Lista de notificaciones
-            const _NotificationItem(
-              icon: Icons.notifications_active_outlined,
-              text: 'Alarma de planta 1',
-            ),
-            const SizedBox(height: 15),
-
-            const _NotificationItem(
-              icon: Icons.warning_amber_outlined,
-              text: 'Actualización',
-            ),
-            const SizedBox(height: 15),
-
-            const _NotificationItem(
-              icon: Icons.emoji_emotions_outlined,
-              text: 'Valore nuestra app',
-            ),
-
-            const Spacer(),
-
-            // Imagen decorativa inferior
-            Image.asset(
-              'lib/assets/images/background.png',
-              fit: BoxFit.cover,
-              height: 80,
-              width: double.infinity,
-              semanticLabel: 'Decoración inferior',
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

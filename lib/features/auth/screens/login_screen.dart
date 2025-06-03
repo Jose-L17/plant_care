@@ -42,7 +42,7 @@ class LoginScreen extends StatelessWidget {
                     const SizedBox(height: 15),
                     const LabeledTextField(label: 'Contraseña', isPassword: true),
                     const SizedBox(height: 25),
-                    _buildLoginButton(context), // Aquí pasamos context
+                    _buildLoginButton(context),
                     const SizedBox(height: 30),
                     _buildRegisterText(context),
                     const SizedBox(height: 20),
@@ -68,7 +68,11 @@ class LoginScreen extends StatelessWidget {
         shadowColor: Colors.black26,
       ),
       onPressed: () {
-        Navigator.pushReplacementNamed(context, AppRoutes.main);
+        Navigator.pushReplacementNamed(
+          context,
+          AppRoutes.main,
+          arguments: 0, // ✅ Ir a Home al iniciar sesión
+        );
       },
       child: const Text(
         'INICIAR SESIÓN',
